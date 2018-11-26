@@ -5,10 +5,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.mvvm.model.User;
+
 /**
  * 时间：2018/11/26 13:30
  * 描述：Mvvm基本使用
- * ViewModel + LiveData 的使用
+ * <p>
+ * 1. ViewModel + LiveData 的使用
+ * <p>
+ * 2. Repository （数据仓库）
+ * Retrofit的使用
+ * <p>
  * 修改人：
  * 修改时间：
  * 修改备注：
@@ -33,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        userViewModel.getUser().observe(this, this::updateView);
+        userViewModel.getUser("YouLe2016").observe(this, this::updateView);
 
-        userViewModel.setUsername("Mouse");
+//        userViewModel.setUsername("Mouse");
     }
 
     private void updateView(User user) {

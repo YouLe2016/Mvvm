@@ -34,4 +34,9 @@ dependencies {
     // Lifecycles, LiveData and ViewModel
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
 
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.converter_gson"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.logging_interceptor"
+
 }

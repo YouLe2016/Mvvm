@@ -1,7 +1,10 @@
 package com.example.mvvm;
 
-import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+
+import com.example.mvvm.model.User;
+import com.example.mvvm.repository.UserRepository;
 
 
 /**
@@ -15,16 +18,18 @@ import android.arch.lifecycle.ViewModel;
  * @qq 270628297
  */
 public class UserViewModel extends ViewModel {
-    private MutableLiveData<User> user;
+    private UserRepository userRepository = UserRepository.getInstance();
+    private LiveData<User> user;
 
-    public MutableLiveData<User> getUser() {
+    public LiveData<User> getUser(String username) {
         if (user == null) {
-            user = new MutableLiveData<>();
+            user = userRepository.getUser(username);
         }
         return user;
     }
 
+    @Deprecated
     public void setUsername(String username) {
-        user.setValue(new User(1, username));
+//        user.setValue(new User(1, username));
     }
 }
