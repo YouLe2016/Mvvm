@@ -1,5 +1,8 @@
 package com.example.mvvm.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -14,6 +17,7 @@ import java.io.Serializable;
  * @author WangYoule
  * @qq 270628297
  */
+@Entity(tableName = "user")
 public class User implements Serializable {
 
     /**
@@ -53,6 +57,7 @@ public class User implements Serializable {
     @SerializedName("login")
     private String login;
     @SerializedName("id")
+    @PrimaryKey()
     private int id;
     @SerializedName("node_id")
     private String nodeId;

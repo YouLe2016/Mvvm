@@ -1,15 +1,12 @@
 package com.example.mvvm.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
+import android.content.Context;
 
 import com.example.mvvm.model.User;
-import com.example.mvvm.utils.RetrofitFactory;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.mvvm.repository.local.LocalUserDataSource;
+import com.example.mvvm.repository.remote.RemoteUserDataSource;
+import com.example.mvvm.utils.NetworkUtils;
 
 /**
  * 时间：2018/11/26 14:09
@@ -31,22 +28,21 @@ public class UserRepository {
     private UserRepository() {
     }
 
+    private Context context;
 
-    private UserApi userApi = RetrofitFactory.getInstance().create(UserApi.class);
+    public void init(Context context) {
+        this.context = context.getApplicationContext();
+    }
+
+    private UserDataSource remoteUserDataSource = RemoteUserDataSource.getInstance();
+    private UserDataSource localUserDataSource = LocalUserDataSource.getInstance();
 
     public LiveData<User> getUser(String username) {
-        MutableLiveData<User> user = new MutableLiveData<>();
-        userApi.queryUserByUsername(username).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(@NonNull Call<User> call, Response<User> response) {
-                user.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<User> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-        return user;
+        if (NetworkUtils.isNetworkConnected(context)) {
+            return remoteUserDataSource.queryUserByUsername(username);
+        } else {
+            return localUserDataSource.queryUserByUsername(username);
+        }
     }
+
 }
