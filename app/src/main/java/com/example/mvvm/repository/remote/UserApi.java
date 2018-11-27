@@ -1,4 +1,4 @@
-package com.example.mvvm.repository;
+package com.example.mvvm.repository.remote;
 
 import com.example.mvvm.model.User;
 

@@ -5,7 +5,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.example.mvvm.model.User;
-import com.example.mvvm.repository.UserApi;
+import com.example.mvvm.model.ui.StateFactory;
+import com.example.mvvm.model.ui.StateModel;
 import com.example.mvvm.repository.UserDataSource;
 import com.example.mvvm.repository.local.LocalUserDataSource;
 import com.example.mvvm.utils.RetrofitFactory;
@@ -39,13 +40,18 @@ public class RemoteUserDataSource implements UserDataSource {
     private UserApi userApi = RetrofitFactory.getInstance().create(UserApi.class);
 
     @Override
-    public LiveData<User> queryUserByUsername(String username) {
-        MutableLiveData<User> data = new MutableLiveData<>();
+    public LiveData<StateModel<User>> queryUserByUsername(String username) {
+        MutableLiveData<StateModel<User>> data = new MutableLiveData<>();
+        data.setValue(StateFactory.loading());
         userApi.queryUserByUsername(username).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 User user = response.body();
-                data.setValue(user);
+                if (user == null) {
+                    data.setValue(StateFactory.empty());
+                } else {
+                    data.setValue(StateFactory.content(user));
+                }
                 // update cache
                 LocalUserDataSource.getInstance().addUser(user);
             }
@@ -53,6 +59,7 @@ public class RemoteUserDataSource implements UserDataSource {
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 t.printStackTrace();
+                data.setValue(StateFactory.error(t));
             }
         });
         return data;

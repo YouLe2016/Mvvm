@@ -94,17 +94,17 @@ public class User implements Serializable {
     @SerializedName("name")
     private String name;
     @SerializedName("company")
-    private Object company;
+    private String company;
     @SerializedName("blog")
     private String blog;
     @SerializedName("location")
-    private Object location;
+    private String location;
     @SerializedName("email")
-    private Object email;
+    private String email;
     @SerializedName("hireable")
-    private Object hireable;
+    private String hireable;
     @SerializedName("bio")
-    private Object bio;
+    private String bio;
     @SerializedName("public_repos")
     private int publicRepos;
     @SerializedName("public_gists")
@@ -270,11 +270,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Object getCompany() {
+    public String getCompany() {
         return company;
     }
 
-    public void setCompany(Object company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 
@@ -286,35 +286,35 @@ public class User implements Serializable {
         this.blog = blog;
     }
 
-    public Object getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Object location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public Object getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Object email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public Object getHireable() {
+    public String getHireable() {
         return hireable;
     }
 
-    public void setHireable(Object hireable) {
+    public void setHireable(String hireable) {
         this.hireable = hireable;
     }
 
-    public Object getBio() {
+    public String getBio() {
         return bio;
     }
 
-    public void setBio(Object bio) {
+    public void setBio(String bio) {
         this.bio = bio;
     }
 

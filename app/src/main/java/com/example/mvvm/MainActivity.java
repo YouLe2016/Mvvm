@@ -3,9 +3,14 @@ package com.example.mvvm;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mvvm.model.User;
+import com.example.mvvm.model.ui.StateFactory;
+import com.example.mvvm.model.ui.StateModel;
+import com.example.mvvm.view.NetworkStateView;
 
 /**
  * 时间：2018/11/26 13:30
@@ -23,12 +28,19 @@ import com.example.mvvm.model.User;
  * @author WangYoule
  * @qq 270628297
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "MainActivity";
+
+    private UserViewModel userViewModel;
 
     private TextView tvId;
     private TextView tvName;
+    /**
+     * 获取用户信息
+     */
+    private Button btGet;
+    private NetworkStateView networkSateView;
 
-    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +52,67 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        userViewModel.getUser("YouLe2016").observe(this, this::updateView);
-
-//        userViewModel.setUsername("Mouse");
+        userViewModel.getUser().observe(this, this::updateView);
     }
 
-    private void updateView(User user) {
-        tvId.setText(String.valueOf(user.getId()));
-        tvName.setText(user.getName());
+    private void updateView(StateModel<User> user) {
+        switch (user.getStatus()) {
+            case Content:
+                networkSateView.showSuccess();
+                tvId.setText(String.valueOf(user.getData().getId()));
+                tvName.setText(user.getData().getName());
+                break;
+            case Empty: {
+                networkSateView.showEmpty();
+                break;
+            }
+            case Error: {
+                networkSateView.showError();
+                break;
+            }
+            case Loading: {
+                networkSateView.showLoading();
+                break;
+            }
+            case NoNet: {
+                networkSateView.showNoNetworkRetry();
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     private void initView() {
         tvId = findViewById(R.id.tv_id);
         tvName = findViewById(R.id.tv_name);
+        btGet = findViewById(R.id.bt_get);
+        btGet.setOnClickListener(this);
+        networkSateView = findViewById(R.id.network_sate_view);
+    }
+
+    int i = 0;
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_get:
+                if (i == 0) {
+                    updateView(StateFactory.empty());
+                    i++;
+                } else if (i == 1) {
+                    updateView(StateFactory.error(null));
+                    i++;
+                } else if (i == 2) {
+                    updateView(StateFactory.noNet());
+                    i++;
+                } else if (i == 3) {
+                    userViewModel.reload("YouLe2016");
+                    i = 0;
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

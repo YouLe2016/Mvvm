@@ -16,9 +16,16 @@ import com.example.mvvm.repository.local.db.DBHelper;
  * @qq 270628297
  */
 public class App extends Application {
+    private static App instance;
+
+    public static App getInstance() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         DBHelper.getInstance().init(this);
         UserRepository.getInstance().init(this);
     }
