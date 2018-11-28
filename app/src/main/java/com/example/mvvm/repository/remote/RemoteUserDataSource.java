@@ -1,12 +1,8 @@
 package com.example.mvvm.repository.remote;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.example.mvvm.model.User;
-import com.example.mvvm.model.ui.StateFactory;
-import com.example.mvvm.model.ui.StateModel;
 import com.example.mvvm.repository.UserDataSource;
 import com.example.mvvm.repository.local.LocalUserDataSource;
 import com.example.mvvm.utils.RetrofitFactory;

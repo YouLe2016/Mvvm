@@ -10,10 +10,27 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        config {
+            keyAlias 'dev'
+            keyPassword '111111'
+            storeFile file('D:/mycode/android_learning/Mvvm/key.jks')
+            storePassword '111111'
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            //是否优化zip
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            //启用代码混淆
+            minifyEnabled true
+            //混淆规则配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 
@@ -24,27 +41,20 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     // Lifecycles, LiveData and ViewModel
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
-
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.converter_gson"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.logging_interceptor"
-
     // room
     implementation "android.arch.persistence.room:runtime:$rootProject.room"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.room"
-
-
-
     implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
-
 }

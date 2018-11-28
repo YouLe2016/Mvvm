@@ -16,7 +16,7 @@ import com.example.mvvm.repository.local.dao.UserDao;
  * @author WangYoule
  * @qq 270628297
  */
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class}, version = 1,exportSchema = true)
 public abstract class DB extends RoomDatabase {
     public abstract UserDao getUserDao();
 }
