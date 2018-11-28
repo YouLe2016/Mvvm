@@ -1,12 +1,15 @@
 package com.example.mvvm.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.example.mvvm.model.User;
+import com.example.mvvm.model.ui.StateFactory;
 import com.example.mvvm.model.ui.StateModel;
 import com.example.mvvm.repository.local.LocalUserDataSource;
 import com.example.mvvm.repository.remote.RemoteUserDataSource;
+import com.example.mvvm.repository.remote.Result;
 import com.example.mvvm.utils.NetworkUtils;
 
 /**
@@ -40,10 +43,32 @@ public class UserRepository {
 
     public LiveData<StateModel<User>> getUser(String username) {
         if (NetworkUtils.isNetworkConnected(context)) {
-            return remoteUserDataSource.queryUserByUsername(username);
+            return queryUserByUsername(remoteUserDataSource, username);
         } else {
-            return localUserDataSource.queryUserByUsername(username);
+            return queryUserByUsername(localUserDataSource, username);
         }
+    }
+
+    private LiveData<StateModel<User>> queryUserByUsername(UserDataSource userDataSource, String username) {
+
+        MutableLiveData<StateModel<User>> data = new MutableLiveData<>();
+        data.setValue(StateFactory.loading());
+        userDataSource.queryUserByUsername(username, new Result<User>() {
+            @Override
+            public void onSuccess(User u) {
+                if (u == null) {
+                    data.setValue(StateFactory.empty());
+                } else {
+                    data.setValue(StateFactory.content(u));
+                }
+            }
+
+            @Override
+            public void onFailed(Throwable t) {
+                data.setValue(StateFactory.error(t));
+            }
+        });
+        return data;
     }
 
 }

@@ -40,18 +40,12 @@ public class RemoteUserDataSource implements UserDataSource {
     private UserApi userApi = RetrofitFactory.getInstance().create(UserApi.class);
 
     @Override
-    public LiveData<StateModel<User>> queryUserByUsername(String username) {
-        MutableLiveData<StateModel<User>> data = new MutableLiveData<>();
-        data.setValue(StateFactory.loading());
+    public void queryUserByUsername(String username, Result<User> result) {
         userApi.queryUserByUsername(username).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 User user = response.body();
-                if (user == null) {
-                    data.setValue(StateFactory.empty());
-                } else {
-                    data.setValue(StateFactory.content(user));
-                }
+                result.onSuccess(user);
                 // update cache
                 LocalUserDataSource.getInstance().addUser(user);
             }
@@ -59,10 +53,9 @@ public class RemoteUserDataSource implements UserDataSource {
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 t.printStackTrace();
-                data.setValue(StateFactory.error(t));
+                result.onFailed(t);
             }
         });
-        return data;
     }
 
 }

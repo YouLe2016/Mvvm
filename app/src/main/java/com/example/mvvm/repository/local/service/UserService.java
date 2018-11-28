@@ -1,8 +1,7 @@
 package com.example.mvvm.repository.local.service;
 
-import android.arch.lifecycle.LiveData;
-
 import com.example.mvvm.model.User;
+import com.example.mvvm.repository.remote.Result;
 
 /**
  * 时间：2018/11/26 15:09
@@ -15,7 +14,8 @@ import com.example.mvvm.model.User;
  * @qq 270628297
  */
 public interface UserService {
-    LiveData<Long> add(User user);
+    void add(User user);
 
-    LiveData<User> queryByUsername(String username);
+    void queryByUsername(String username, Result<User> result) throws RuntimeException;
+
 }

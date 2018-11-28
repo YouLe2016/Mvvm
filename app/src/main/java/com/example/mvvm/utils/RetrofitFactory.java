@@ -31,7 +31,7 @@ public class RetrofitFactory {
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com")
+                .baseUrl("https://api.github.com/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
