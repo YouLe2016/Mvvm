@@ -15,10 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".view.user.UserActivity">
-
-        </activity>
-        <activity android:name=".view.project.ProjectActivity">
+        <activity android:name=".view.user.UserActivity"></activity>
+        <activity android:name=".view.project.ProjectActivity"></activity>
+        <activity android:name=".view.Main2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
