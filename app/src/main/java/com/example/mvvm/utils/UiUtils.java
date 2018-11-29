@@ -18,7 +18,7 @@ public class UiUtils {
     private static final String TAG = "UiUtils";
 
     public static int dp2px(float dp) {
-        float density = App.getInstance().getResources().getDisplayMetrics().density;
+        float density = App.getAppContext().getResources().getDisplayMetrics().density;
         return (int) (dp * density + 0.5);
     }
 
@@ -133,7 +133,7 @@ public class UiUtils {
      * log输出设备屏幕信息
      */
     public static void logMetricsValues() {
-        DisplayMetrics metrics = App.getInstance().getResources().getDisplayMetrics();
+        DisplayMetrics metrics = App.getAppContext().getResources().getDisplayMetrics();
         LogUtils.i(TAG, "density: " + metrics.density);
         LogUtils.i(TAG, "scaledDensity: " + metrics.scaledDensity);
         LogUtils.i(TAG, "densityDpi: " + metrics.densityDpi);

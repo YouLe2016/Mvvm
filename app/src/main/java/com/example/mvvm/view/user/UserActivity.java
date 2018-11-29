@@ -1,4 +1,4 @@
-package com.example.mvvm;
+package com.example.mvvm.view.user;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -7,10 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.mvvm.R;
 import com.example.mvvm.model.User;
 import com.example.mvvm.model.ui.StateFactory;
 import com.example.mvvm.model.ui.StateModel;
-import com.example.mvvm.view.NetworkStateView;
+import com.example.mvvm.widget.state.NetworkStateView;
 
 /**
  * 时间：2018/11/26 13:30
@@ -28,8 +29,8 @@ import com.example.mvvm.view.NetworkStateView;
  * @author WangYoule
  * @qq 270628297
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "MainActivity";
+public class UserActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "UserActivity";
 
     private UserViewModel userViewModel;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user);
         initView();
         initData();
     }

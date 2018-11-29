@@ -1,7 +1,8 @@
 package com.example.mvvm.repository.local.db;
 
 import android.arch.persistence.room.Room;
-import android.content.Context;
+
+import com.example.mvvm.App;
 
 /**
  * 时间：2018/11/26 14:55
@@ -27,8 +28,8 @@ public class DBHelper {
 
     private DB db;
 
-    public void init(Context context) {
-        db = Room.databaseBuilder(context.getApplicationContext(), DB.class, DATABASE_NAME).build();
+    public void init() {
+        db = Room.databaseBuilder(App.getAppContext(), DB.class, DATABASE_NAME).build();
     }
 
     public DB getDb() {

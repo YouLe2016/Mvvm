@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.user.UserActivity">
 
     <TextView
         android:id="@+id/tv_id"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/tv_id"
         tools:text="name" />
 
-    <com.example.mvvm.view.NetworkStateView
+    <com.example.mvvm.widget.state.NetworkStateView
         android:id="@+id/network_sate_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"

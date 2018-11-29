@@ -1,8 +1,8 @@
 package com.example.mvvm;
 
 import android.app.Application;
+import android.content.Context;
 
-import com.example.mvvm.repository.UserRepository;
 import com.example.mvvm.repository.local.db.DBHelper;
 
 /**
@@ -16,17 +16,16 @@ import com.example.mvvm.repository.local.db.DBHelper;
  * @qq 270628297
  */
 public class App extends Application {
-    private static App instance;
+    private static Context context;
 
-    public static App getInstance() {
-        return instance;
+    public static Context getAppContext() {
+        return context;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
-        DBHelper.getInstance().init(this);
-        UserRepository.getInstance().init(this);
+        context = this.getApplicationContext();
+        DBHelper.getInstance().init();
     }
 }

@@ -11,6 +11,8 @@ package com.example.mvvm.model.ui;
  * @qq 270628297
  */
 public class StateFactory {
+    private StateFactory() {
+    }
 
     public static <T> StateModel<T> loading() {
         return new StateModel<>(Status.Loading, null, null);

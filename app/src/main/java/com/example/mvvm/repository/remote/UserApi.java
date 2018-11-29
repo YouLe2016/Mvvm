@@ -17,6 +17,6 @@ import retrofit2.http.Path;
  * @qq 270628297
  */
 public interface UserApi {
-    @GET("/users/{username}")
+    @GET("users/{username}")
     Call<User> queryUserByUsername(@Path("username") String username);
 }

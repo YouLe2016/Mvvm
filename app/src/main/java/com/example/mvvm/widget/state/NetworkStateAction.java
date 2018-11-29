@@ -1,4 +1,4 @@
-package com.example.mvvm.view;
+package com.example.mvvm.widget.state;
 
 /**
  * Created by haoran on 2018/5/11.

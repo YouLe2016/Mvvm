@@ -1,4 +1,4 @@
-package com.example.mvvm.view;
+package com.example.mvvm.widget.state;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -166,7 +166,7 @@ public class NetworkStateView extends LinearLayout implements NetworkStateAction
                     @Override
                     public void onClick(View view) {
                         if (null != mRefreshListener) {
-                            mRefreshListener.onRefresh();
+                            mRefreshListener.onReload();
                         }
                     }
                 });
@@ -199,7 +199,7 @@ public class NetworkStateView extends LinearLayout implements NetworkStateAction
                     @Override
                     public void onClick(View view) {
                         if (null != mRefreshListener) {
-                            mRefreshListener.onRefresh();
+                            mRefreshListener.onReload();
                         }
                     }
                 });
@@ -232,7 +232,7 @@ public class NetworkStateView extends LinearLayout implements NetworkStateAction
                     @Override
                     public void onClick(View view) {
                         if (null != mRefreshListener) {
-                            mRefreshListener.onRefresh();
+                            mRefreshListener.onReload();
                         }
                     }
                 });
@@ -283,6 +283,6 @@ public class NetworkStateView extends LinearLayout implements NetworkStateAction
     }
 
     public interface OnRetryClickListener {
-        void onRefresh();
+        void onReload();
     }
 }

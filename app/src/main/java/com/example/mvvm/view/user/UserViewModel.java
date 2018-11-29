@@ -1,4 +1,4 @@
-package com.example.mvvm;
+package com.example.mvvm.view.user;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -23,7 +23,6 @@ import com.example.mvvm.repository.UserRepository;
 public class UserViewModel extends ViewModel {
     private static final String TAG = "UserViewModel";
 
-    private UserRepository userRepository = UserRepository.getInstance();
     private LiveData<StateModel<User>> user;
     private MutableLiveData<String> username;
 
@@ -33,7 +32,7 @@ public class UserViewModel extends ViewModel {
     public LiveData<StateModel<User>> getUser() {
         if (user == null) {
             this.username = new MutableLiveData<>();
-            user = Transformations.switchMap(this.username, username -> userRepository.getUser(username));
+            user = Transformations.switchMap(this.username, username -> UserRepository.getInstance().getUser(username));
         }
         return user;
     }
