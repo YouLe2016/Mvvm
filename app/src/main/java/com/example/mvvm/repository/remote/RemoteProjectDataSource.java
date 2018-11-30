@@ -7,7 +7,7 @@ import com.example.mvvm.model.project.Projects;
 import com.example.mvvm.model.ui.StateFactory;
 import com.example.mvvm.model.ui.StateModel;
 import com.example.mvvm.repository.ProjectDataSource;
-import com.example.mvvm.utils.RetrofitFactory;
+import com.example.mvvm.utils.net.RetrofitFactory;
 
 import retrofit2.Call;
 import retrofit2.Callback;

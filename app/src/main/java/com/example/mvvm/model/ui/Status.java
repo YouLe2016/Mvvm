@@ -11,5 +11,5 @@ package com.example.mvvm.model.ui;
  * @qq 270628297
  */
 public enum Status {
-    Loading, Content, Empty, Error, NoNet
+    Loading, Content, Empty, Error, NoNet,
 }

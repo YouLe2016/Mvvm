@@ -1,12 +1,14 @@
 package com.example.mvvm.repository.remote;
 
+
 import com.example.mvvm.model.User;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.adapter.rxjava2.Result;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-/**
+/**l
  * 时间：2018/11/26 14:07
  * 描述：
  * 修改人：
@@ -18,5 +20,5 @@ import retrofit2.http.Path;
  */
 public interface UserApi {
     @GET("users/{username}")
-    Call<User> queryUserByUsername(@Path("username") String username);
+    Observable<User> queryUserByUsername(@Path("username") String username);
 }

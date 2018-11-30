@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.mvvm.R;
 import com.example.mvvm.databinding.ActivityUserBinding;
 import com.example.mvvm.model.User;
+import com.example.mvvm.model.exception.ApiException;
 import com.example.mvvm.model.ui.StateFactory;
 import com.example.mvvm.model.ui.StateModel;
 
