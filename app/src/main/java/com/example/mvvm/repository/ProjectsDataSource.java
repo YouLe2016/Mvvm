@@ -15,7 +15,7 @@ import com.example.mvvm.model.ui.StateModel;
  * @author WangYoule
  * @qq 270628297
  */
-public interface ProjectDataSource {
+public interface ProjectsDataSource {
 
     LiveData<StateModel<Projects>> queryProjects(int page);
 }

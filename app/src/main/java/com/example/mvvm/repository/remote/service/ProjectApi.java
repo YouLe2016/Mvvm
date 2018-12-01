@@ -1,8 +1,8 @@
-package com.example.mvvm.repository.remote;
+package com.example.mvvm.repository.remote.service;
 
 import com.example.mvvm.model.project.Projects;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -19,5 +19,5 @@ import retrofit2.http.Query;
 public interface ProjectApi {
 
     @GET("search/repositories?q=tetris+language:assembly&sort=stars&order=desc")
-    Call<Projects> queryProjects(@Query("page") int page);
+    Observable<Projects> queryProjects(@Query("page") int page);
 }

@@ -1,6 +1,9 @@
 package com.example.mvvm.repository.local.db;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
+import android.support.annotation.NonNull;
 
 import com.example.mvvm.App;
 
@@ -28,8 +31,17 @@ public class DBHelper {
 
     private DB db;
 
+    private Migration migration = new Migration(1, 2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `projects` (`totalCount` INTEGER NOT NULL, `incompleteResults` INTEGER NOT NULL, `page` INTEGER NOT NULL, `items` TEXT, PRIMARY KEY(`page`))");
+        }
+    };
+
     public void init() {
-        db = Room.databaseBuilder(App.getAppContext(), DB.class, DATABASE_NAME).build();
+        db = Room.databaseBuilder(App.getAppContext(), DB.class, DATABASE_NAME)
+                .addMigrations(migration)
+                .build();
     }
 
     public DB getDb() {

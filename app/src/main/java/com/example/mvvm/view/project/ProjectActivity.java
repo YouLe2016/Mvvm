@@ -51,6 +51,33 @@ public class ProjectActivity extends AppCompatActivity implements NetworkStateVi
         networkSateView.setOnRetryClickListener(this);
     }
 
+    private NetworkStateView networkSateView;
+
+    @Override
+    public void onReload() {
+        status = ListStatus.Content;
+        projectsViewModel.load(page = 1);
+    }
+
+    private TwinklingRefreshLayout refreshLayout;
+
+    private int page = 1;
+
+    private RefreshListenerAdapter refreshListener = new RefreshListenerAdapter() {
+        @Override
+        public void onRefresh(TwinklingRefreshLayout refreshLayout) {
+            status = ListStatus.Refreshing;
+            projectsViewModel.load(page = 1);
+        }
+
+        @Override
+        public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
+            status = ListStatus.LoadingMore;
+            projectsViewModel.load(++page);
+        }
+    };
+
+
 
     private void update(StateModel<Projects> projects) {
         switch (projects.getStatus()) {
@@ -134,29 +161,4 @@ public class ProjectActivity extends AppCompatActivity implements NetworkStateVi
         }
     }
 
-    private NetworkStateView networkSateView;
-
-    @Override
-    public void onReload() {
-        status = ListStatus.Content;
-        projectsViewModel.load(page = 1);
-    }
-
-    private TwinklingRefreshLayout refreshLayout;
-
-    private int page = 1;
-
-    private RefreshListenerAdapter refreshListener = new RefreshListenerAdapter() {
-        @Override
-        public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-            status = ListStatus.Refreshing;
-            projectsViewModel.load(page = 1);
-        }
-
-        @Override
-        public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-            status = ListStatus.LoadingMore;
-            projectsViewModel.load(++page);
-        }
-    };
 }

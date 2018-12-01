@@ -29,6 +29,7 @@ public class ProjectViewModel extends ViewModel {
         if (projects == null) {
             this.page = new MutableLiveData<>();
             projects = Transformations.switchMap(this.page, page -> ProjectRepository.getInstance().getProject(page));
+//            LiveData<LiveData<StateModel<Projects>>> map = Transformations.map(this.page, input -> ProjectRepository.getInstance().getProject(input));
         }
         return projects;
     }

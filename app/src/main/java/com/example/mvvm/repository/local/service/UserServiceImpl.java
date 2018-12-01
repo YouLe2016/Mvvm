@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public LiveData<Long> add(User user) {
         // 注意: room 中 insert方法不可以在主线程中执行
         final MutableLiveData<Long> data = new MutableLiveData<>();
-        new AddUserTask().init(userDao, user, data).execute();
+        new AddUserTask().init(userDao, data).execute();
         return data;
     }
 
@@ -44,21 +44,19 @@ public class UserServiceImpl implements UserService {
         return userDao.queryByUsername(username);
     }
 
-    private static class AddUserTask extends AsyncTask<Void, Void, Long> {
-        User user;
+    private static class AddUserTask extends AsyncTask<User, Void, Long> {
         UserDao userDao;
         MutableLiveData<Long> result;
 
-        private AddUserTask init(UserDao userDao, User user, MutableLiveData<Long> result) {
+        private AddUserTask init(UserDao userDao, MutableLiveData<Long> result) {
             this.userDao = userDao;
-            this.user = user;
             this.result = result;
             return this;
         }
 
         @Override
-        protected Long doInBackground(Void... voids) {
-            return userDao.add(user);
+        protected Long doInBackground(User... user) {
+            return userDao.add(user[0]);
         }
 
         @Override

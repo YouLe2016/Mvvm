@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.mvvm.R;
 import com.example.mvvm.model.project.ProjectItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ import java.util.List;
  * @qq 270628297
  */
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
-    private List<ProjectItem> data;
+    private List<ProjectItem> data = new ArrayList<>();
 
     public ProjectAdapter() {
     }

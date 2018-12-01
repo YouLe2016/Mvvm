@@ -1,13 +1,13 @@
 package com.example.mvvm.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
 
 import com.example.mvvm.App;
 import com.example.mvvm.model.project.Projects;
-import com.example.mvvm.model.ui.StateFactory;
 import com.example.mvvm.model.ui.StateModel;
-import com.example.mvvm.repository.remote.RemoteProjectDataSource;
+import com.example.mvvm.repository.local.LocalProjectsDataSource;
+import com.example.mvvm.repository.remote.RemoteProjectsDataSource;
+import com.example.mvvm.utils.LogUtils;
 import com.example.mvvm.utils.NetworkUtils;
 
 /**
@@ -31,15 +31,14 @@ public class ProjectRepository {
 
     }
 
-    private ProjectDataSource remoteProjectDataSource = RemoteProjectDataSource.getInstance();
+    private ProjectsDataSource remoteProjectDataSource = RemoteProjectsDataSource.getInstance();
+    private ProjectsDataSource localProjectDataSource = LocalProjectsDataSource.getInstance();
 
     public LiveData<StateModel<Projects>> getProject(int page) {
         if (NetworkUtils.isNetworkConnected(App.getAppContext())) {
             return remoteProjectDataSource.queryProjects(page);
         } else {
-            MediatorLiveData<StateModel<Projects>> data = new MediatorLiveData<>();
-            data.setValue(StateFactory.noNet());
-            return data;
+            return localProjectDataSource.queryProjects(page);
         }
     }
 

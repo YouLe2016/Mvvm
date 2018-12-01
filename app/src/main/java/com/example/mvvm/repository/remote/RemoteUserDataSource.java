@@ -7,10 +7,9 @@ import com.example.mvvm.model.livedata.StateLiveDateFactory;
 import com.example.mvvm.model.ui.StateModel;
 import com.example.mvvm.repository.UserDataSource;
 import com.example.mvvm.repository.local.LocalUserDataSource;
+import com.example.mvvm.repository.remote.service.UserApi;
 import com.example.mvvm.utils.net.RetrofitFactory;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import com.example.mvvm.utils.net.RxUtils;
 
 /**
  * 时间：2018/11/26 16:44
@@ -34,15 +33,14 @@ public class RemoteUserDataSource implements UserDataSource {
 
 
     private UserApi userApi = RetrofitFactory.getInstance().create(UserApi.class);
+    private LocalUserDataSource localUserDataSource = LocalUserDataSource.getInstance();
 
     @Override
     public LiveData<StateModel<User>> queryUserByUsername(String username) {
         return StateLiveDateFactory.createStateModel(userApi.queryUserByUsername(username)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
+                .compose(RxUtils.transform())
                 .map(user -> {
-                    LocalUserDataSource.getInstance().addUser(user);
+                    localUserDataSource.addUser(user);
                     return user;
                 }));
     }
