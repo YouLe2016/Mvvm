@@ -1,11 +1,9 @@
 package com.example.mvvm.repository.remote;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 
 import com.example.mvvm.model.livedata.StateLiveDateFactory;
 import com.example.mvvm.model.project.Projects;
-import com.example.mvvm.model.ui.StateFactory;
 import com.example.mvvm.model.ui.StateModel;
 import com.example.mvvm.repository.ProjectsDataSource;
 import com.example.mvvm.repository.local.LocalProjectsDataSource;
@@ -40,8 +38,6 @@ public class RemoteProjectsDataSource implements ProjectsDataSource {
 
     @Override
     public LiveData<StateModel<Projects>> queryProjects(int page) {
-        MutableLiveData<StateModel<Projects>> data = new MutableLiveData<>();
-        data.setValue(StateFactory.loading());
         return StateLiveDateFactory.createStateModel(api.queryProjects(page)
                 .compose(RxUtils.transform())
                 .map(projects -> {
